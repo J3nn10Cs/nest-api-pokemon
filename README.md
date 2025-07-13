@@ -23,3 +23,8 @@
  ```
   docker-compose up -d
  ```
+
+ 5. Cargar datos
+ ```
+  http://localhost:3000/api/seed
+ ```
