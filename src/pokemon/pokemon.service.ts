@@ -4,6 +4,7 @@ import { UpdatePokemonDto } from './dto/update-pokemon.dto';
 import { Pokemon } from './entities/pokemon.entity';
 import { isValidObjectId, Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
+import { PaginationDto } from 'src/common/dto/paginationDto.dto';
 
 @Injectable()
 export class PokemonService {
@@ -27,8 +28,32 @@ export class PokemonService {
     
   }
 
-  async findAll() {
-    return await this.pokemonModel.find();
+  async findAll(paginationDto : PaginationDto) {
+    const { limit, page } = paginationDto;
+
+    const totalPage = await this.pokemonModel.countDocuments();
+
+    //last page
+    const lastPage = Math.ceil(totalPage / limit);
+
+    if(page > lastPage){
+      throw new NotFoundException(`Page #${page} not exists. Total pages: ${lastPage}`);
+    }
+
+    const data = await this.pokemonModel
+      .find()
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .sort({ no: 'asc' });
+
+    return {
+      data,
+      meta : {
+        page,
+        totalPage,
+        lastPage
+      }
+    }
   }
 
   async findOne(term: string) {

@@ -22,7 +22,7 @@ export class SeedService {
     //eliminar todos os pokemons
     await this.pokemonModel.deleteMany({});
 
-    const data = await this.http.get<IPokemon>('https://pokeapi.co/api/v2/pokemon?limit=10');
+    const data = await this.http.get<IPokemon>('https://pokeapi.co/api/v2/pokemon?limit=60');
     
     const pokemonToInsert : { name: string, no: number }[] = [];
 
