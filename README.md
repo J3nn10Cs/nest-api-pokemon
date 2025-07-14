@@ -24,7 +24,13 @@
   docker-compose up -d
  ```
 
- 5. Cargar datos
+ 5. Clonar el archivo __.env.template__ y copiar a ```.env```
+
+ 6. Ejecutar el entorno de desarrollo
+ ```
+  yarn start:dev
+ ```
+ 7. Cargar la base de datos
  ```
   http://localhost:3000/api/seed
  ```

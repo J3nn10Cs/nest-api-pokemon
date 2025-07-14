@@ -19,7 +19,7 @@ export class SeedService {
   //regiser the simulation of the seed command
   async executeSeed() {
 
-    //eliminar todos os pokemons
+    //delete all pokemons
     await this.pokemonModel.deleteMany({});
 
     const data = await this.http.get<IPokemon>('https://pokeapi.co/api/v2/pokemon?limit=60');
